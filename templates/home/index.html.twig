@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+	<style>
+		#search_car {
+			display: flex;
+			flex-direction: column;
+			align-items: center
+		}
+		a {
+			text-decoration: none;
+			color: inherit
+		}
+	</style>
+{% endblock %}
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block body %}
+
+	<main class="container">
+
+	<section class="row">
+		<p>The temperature is {{temperature}} °C
+	</section>
+
+		<section class="row">
+			<div class="col">
+				{{form(searchCarForm)}}
+				<br><br>
+				</div>
+		</section>
+		<section class="row">
+				<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th {% if pages.isSorted('id') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pages, 'id', 'id')|raw }}
+
+							</th>
+							<th {% if pages.isSorted('name') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pages, 'name', 'name')|raw }}
+
+							</th>
+							<th {% if pages.isSorted('nbSeats') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pages, 'nbSeats', 'nbSeats')|raw }}
+
+							</th>
+							<th {% if pages.isSorted('nbDoors') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pages, 'nbDoors', 'nbDoors')|raw }}
+
+							</th>
+							<th {% if pages.isSorted('cost') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pages, 'cost', 'cost')|raw }}
+
+							</th>
+							<th {% if pages.isSorted('category') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pages, 'category', 'category')|raw }}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for car in pages %}
+							<tr>
+								<td>{{car.id}}</td>
+								<td>{{car.name}}</td>
+								<td>{{car.nbSeats}}</td>
+								<td>{{car.nbDoors}}</td>
+								<td>{{car.cost}}</td>
+								<td>{{car.category}}</td>
+
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<div class="d-flex justify-content-center">
+					{% do pages.setPageRange(2) %}
+					{{knp_pagination_render(pages,'base/pagination.html.twig')}}
+				</div>
+		</section>
+	</main>
+	{% endblock %}
